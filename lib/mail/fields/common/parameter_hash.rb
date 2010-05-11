@@ -8,7 +8,7 @@ module Mail
   # to make that happen
   # Parameters are defined in RFC2045, split keys are in RFC2231
 
-  class ParameterHash < HashWithIndifferentAccess
+  class ParameterHash < Hash
 
     include Mail::Utilities
 
@@ -30,6 +30,7 @@ module Mail
     end
 
     def encoded
+      begin
       map.sort { |a,b| a.first <=> b.first }.map do |key_name, value|
         unless value.ascii_only?
           value = Mail::Encodings.param_encode(value)
@@ -37,6 +38,9 @@ module Mail
         end
         %Q{#{key_name}=#{quote_token(value)}}
       end.join(";\r\n\t")
+    rescue
+      raise self.inspect
+    end
     end
 
     def decoded

@@ -1,12 +1,32 @@
 # encoding: utf-8
+
+class String
+  alias_method :blank?, :empty?
+  
+  def mb_chars() self end
+end
+
+class NilClass
+  def blank?() true end
+end
+
+class Array
+  alias_method :blank?, :empty?
+end
+
+class Object
+  def blank?()   false   end
+  def present?() !blank? end
+end
+
 module Mail # :doc:
 
   require 'date'
 
-  require 'active_support'
-  require 'active_support/core_ext/hash/indifferent_access'
-  require 'active_support/core_ext/object/blank'
-  require 'active_support/core_ext/string'
+  #require 'active_support'
+  #require 'active_support/core_ext/hash/indifferent_access'
+  #require 'active_support/core_ext/object/blank'
+  #require 'active_support/core_ext/string'
 
   require 'uri'
   require 'net/smtp'

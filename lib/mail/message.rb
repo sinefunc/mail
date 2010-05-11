@@ -1803,7 +1803,7 @@ module Mail
     end
     
     def init_with_hash(hash)
-      passed_in_options = hash.with_indifferent_access
+      passed_in_options = hash #.with_indifferent_access
       self.raw_source = ''
 
       @header = Mail::Header.new

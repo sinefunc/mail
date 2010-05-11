@@ -15,11 +15,11 @@ Cucumber::Rake::Task.new do |t|
   t.cucumber_opts = "spec/features --format pretty"
 end
 
-Spec::Rake::SpecTask.new(:rcov) do |t|
-  t.spec_files = FileList['test/**/tc_*.rb', 'spec/**/*_spec.rb']
-  t.rcov = true
-  t.rcov_opts = t.rcov_opts << ['--exclude', '/Library,/opt,/System,/usr']
-end
+# Spec::Rake::SpecTask.new(:rcov) do |t|
+#   t.spec_files = FileList['test/**/tc_*.rb', 'spec/**/*_spec.rb']
+#   t.rcov = true
+#   t.rcov_opts = t.rcov_opts << ['--exclude', '/Library,/opt,/System,/usr']
+# end
 
 Spec::Rake::SpecTask.new(:spec) do |t|
   t.warning = true

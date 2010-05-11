@@ -132,16 +132,16 @@ module Mail
       # 80 - 2 - 1 - 18 = 59 / 6 ~= 10
       @unfolded_line.ascii_only? ? (limit = 78 - prepend) : (limit = 10 - prepend)
       # find the last white space character within the limit
-      if wspp = @unfolded_line.mb_chars.slice(0..limit) =~ /[ \t][^ \t]*$/
+      if wspp = @unfolded_line.slice(0..limit) =~ /[ \t][^ \t]*$/
         wrap = true
         wspp = limit if wspp == 0
-        @folded_line << encode(@unfolded_line.mb_chars.slice!(0...wspp).strip.to_str)
+        @folded_line << encode(@unfolded_line.slice!(0...wspp).strip.to_str)
         @folded_line.flatten!
       # if no last whitespace before the limit, find the first
-      elsif wspp = @unfolded_line.mb_chars =~ /[ \t][^ \t]/
+      elsif wspp = @unfolded_line =~ /[ \t][^ \t]/u
         wrap = true
         wspp = limit if wspp == 0
-        @folded_line << encode(@unfolded_line.mb_chars.slice!(0...wspp).strip.to_str)
+        @folded_line << encode(@unfolded_line.slice!(0...wspp).strip.to_str)
         @folded_line.flatten!
       # if no whitespace, don't wrap
       else
