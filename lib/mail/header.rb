@@ -161,16 +161,16 @@ module Mail
     end
     
     def charset
-      if self[:content_type] && self[:content_type].parameters
-        self[:content_type].parameters[:charset]
+      if self['content_type'] && self['content_type'].parameters
+        self['content_type'].parameters['charset']
       else
         @charset
       end
     end
     
     def charset=(val)
-      if self[:content_type]
-        self[:content_type].parameters[:charset] = val
+      if self['content_type']
+        self['content_type'].parameters['charset'] = val
       end
       @charset = val
     end

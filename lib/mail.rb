@@ -1,24 +1,5 @@
 # encoding: utf-8
 
-class String
-  alias_method :blank?, :empty?
-  
-  def mb_chars() self end
-end
-
-class NilClass
-  def blank?() true end
-end
-
-class Array
-  alias_method :blank?, :empty?
-end
-
-class Object
-  def blank?()   false   end
-  def present?() !blank? end
-end
-
 module Mail # :doc:
 
   require 'date'
@@ -50,6 +31,7 @@ module Mail # :doc:
 
   require 'mail/version'
 
+  require 'mail/core_extensions/blank'
   require 'mail/core_extensions/nil'
   require 'mail/core_extensions/string'
 

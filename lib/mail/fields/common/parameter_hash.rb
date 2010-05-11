@@ -12,11 +12,15 @@ module Mail
 
     include Mail::Utilities
 
+    def []=(k, v)
+      super(k.to_s, v)
+    end
+
     def [](key_name)
       pairs = select { |k,v| k =~ /^#{key_name}\*/ }
       pairs = pairs.to_a if RUBY_VERSION >= '1.9'
       if pairs.empty? # Just dealing with a single value pair
-        super(key_name)
+        super(key_name.to_s)
       else # Dealing with a multiple value pair or a single encoded value pair
         string = pairs.sort { |a,b| a.first <=> b.first }.map { |v| v.last }.join('')
         if mt = string.match(/([\w\d\-]+)'(\w\w)'(.*)/)
@@ -30,21 +34,17 @@ module Mail
     end
 
     def encoded
-      begin
-      map.sort { |a,b| a.first <=> b.first }.map do |key_name, value|
+      map.sort_by { |e| e.first.to_s }.map do |key_name, value|
         unless value.ascii_only?
           value = Mail::Encodings.param_encode(value)
           key_name = "#{key_name}*"
         end
         %Q{#{key_name}=#{quote_token(value)}}
       end.join(";\r\n\t")
-    rescue
-      raise self.inspect
-    end
     end
 
     def decoded
-      map.sort { |a,b| a.first <=> b.first }.map do |key_name, value|
+      map.sort_by { |e| e.first.to_s }.map do |key_name, value|
         %Q{#{key_name}=#{quote_token(value)}}
       end.join("; ")
     end
