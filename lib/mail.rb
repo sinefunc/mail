@@ -3,12 +3,6 @@
 module Mail # :doc:
 
   require 'date'
-
-  #require 'active_support'
-  #require 'active_support/core_ext/hash/indifferent_access'
-  #require 'active_support/core_ext/object/blank'
-  #require 'active_support/core_ext/string'
-
   require 'uri'
   require 'net/smtp'
   require 'mime/types'
